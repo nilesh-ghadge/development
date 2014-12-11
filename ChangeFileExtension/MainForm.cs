@@ -16,25 +16,26 @@ namespace ChangeFileExtension
         public mainForm()
         {
             InitializeComponent();
-            
         }
 
-        private void folderBrowserDialog1_HelpRequest(object sender, EventArgs e)
-        {
-            MessageBox.Show("Files found");
-        }
-
+        // Opens up a folder browser dialog when you click on the ellipsis button
         private void button1_Click(object sender, EventArgs e)
         {
-            DialogResult result = folderBrowserDialog1.ShowDialog();
-            if (result == DialogResult.OK) {
-                
-                txtBox_selectedDirectory.Text = folderBrowserDialog1.SelectedPath;
-                
+            try
+            {
+                DialogResult result = folderBrowserDialog1.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    txtBox_selectedDirectory.Text = folderBrowserDialog1.SelectedPath;
+                }
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Exception while selecting a directory: " + ex.Message,"Error",MessageBoxButtons.OK);
             }
         }
 
-        internal void DirSearch(string sDir)
+        // Recursively searches from the selected directory for files with matching extension
+        internal void SearchDirectory(string sDir)
         {
             try
             {
@@ -42,19 +43,19 @@ namespace ChangeFileExtension
                 foreach (string d in Directory.GetDirectories(sDir))
                 {
                     foreach (string f in Directory.GetFiles(d,extension))
-                    {
-                        
+                    {                        
                         lstBox_directoryContents.Items.Add(f);   
                     }
-                    DirSearch(d);
+                    SearchDirectory(d);
                 }
             }
-            catch (System.Exception excpt)
+            catch (Exception ex)
             {
-                MessageBox.Show(excpt.Message);
+                MessageBox.Show("Exception while searching the directory: " + ex.Message, "Error", MessageBoxButtons.OK);
             }
         }
 
+        //Selects all the items in the listbox for directory files
         private void chkBox_selectAll_CheckedChanged(object sender, EventArgs e)
         {
             if (chkBox_selectAll.CheckState == CheckState.Checked)
@@ -72,9 +73,10 @@ namespace ChangeFileExtension
         private void cmbBox_selectedExtension_SelectedIndexChanged(object sender, EventArgs e)
         {
             lstBox_directoryContents.Items.Clear();
-            DirSearch(folderBrowserDialog1.SelectedPath);
+            SearchDirectory(folderBrowserDialog1.SelectedPath);
         }
 
+        //Function which actually changes the file extensions of the selected files. 
         private void btn_changeFileExtension_Click(object sender, EventArgs e)
         {
             try
@@ -101,25 +103,38 @@ namespace ChangeFileExtension
                             File.Move(item.ToString(), Path.ChangeExtension(item.ToString(), targetExtension));
                         }
                         progressBar.Visible = false;
+                        MessageBox.Show("File extensions have been changed successfully", "Success", MessageBoxButtons.OK);
+                        ClearUpUI();
                     }
                 }
                 else {
                     if (lstBox_directoryContents.SelectedIndex == -1)
                     {
-                        MessageBox.Show("Please select atleast one file..");
+                        MessageBox.Show("Please select atleast one file", "Error", MessageBoxButtons.OK);
                         lstBox_directoryContents.Focus();
                     }
                     else
                     {
-                        MessageBox.Show("Please select a target extension");
+                        MessageBox.Show("Please select a target extension", "Error", MessageBoxButtons.OK);
                         cmbBox_targetExtension.Focus();
                     }
                 }
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Exception while changing file extensions: " + ex.Message, "Error", MessageBoxButtons.OK);
+            }
+        }
 
-                MessageBox.Show(ex.Message);
+        //Function to clear up the UI after a successful execution
+        internal void ClearUpUI() {
+            try
+            {
+                lstBox_directoryContents.Items.Clear();
+                chkBox_selectAll.Checked = false;
+            }
+            catch (Exception ex) {
+                MessageBox.Show("Exception while clearing up UI: " + ex.Message, "Error", MessageBoxButtons.OK);
             }
         }
 

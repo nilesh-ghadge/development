@@ -56,7 +56,6 @@
             this.folderBrowserDialog1.Description = "Select a folder";
             this.folderBrowserDialog1.SelectedPath = "C:\\";
             this.folderBrowserDialog1.ShowNewFolderButton = false;
-            this.folderBrowserDialog1.HelpRequest += new System.EventHandler(this.folderBrowserDialog1_HelpRequest);
             // 
             // txtBox_selectedDirectory
             // 
@@ -102,7 +101,7 @@
             // lbl_selectExtension
             // 
             this.lbl_selectExtension.AutoSize = true;
-            this.lbl_selectExtension.Location = new System.Drawing.Point(19, 89);
+            this.lbl_selectExtension.Location = new System.Drawing.Point(19, 85);
             this.lbl_selectExtension.Name = "lbl_selectExtension";
             this.lbl_selectExtension.Size = new System.Drawing.Size(94, 15);
             this.lbl_selectExtension.TabIndex = 6;
@@ -130,7 +129,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(337, 89);
+            this.label1.Location = new System.Drawing.Point(337, 84);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(130, 15);
             this.label1.TabIndex = 8;
@@ -167,7 +166,7 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(236, 423);
+            this.progressBar.Location = new System.Drawing.Point(232, 458);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(273, 27);
             this.progressBar.TabIndex = 11;
