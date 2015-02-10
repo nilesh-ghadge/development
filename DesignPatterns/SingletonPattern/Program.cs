@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+/*
+ * Ensure a class has one instance, and provide a global point of access to it
+ *
+ * Example: Login module where we want to invoke the module to perform log in only once
+ */
 namespace SingletonPattern
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var singleton = Singleton.GetInstance();
             singleton.Login();

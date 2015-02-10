@@ -1,5 +1,9 @@
 ﻿using System;
-
+/*
+ * a Null Object is an object with defined ("null") behavior
+ * 
+ * Example: Game 
+ * */
 namespace NullPattern
 {
     class Program
